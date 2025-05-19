@@ -28,19 +28,18 @@
 
 # Update DNS record
 :log info ("[ddns-updater] Updating \"$DomainName\" DNS record to $WanIP6 ...");
-/tool fetch \
+:local Result [/tool fetch \
     http-method=put \
     mode=https \
     http-header-field=$header \
     http-data=$data \
     url=$url \
     as-value \
-    output=user;
+    output=user];
 
 # Check update result
-:local FetchDnsRecord [:parse [/system script get "ddns-fetch-dns-record" source]];
-:local NewResolvedIP [$FetchDnsRecord Profile=$Profile];
-:if ($NewResolvedIP = $WanIP6) do={
+:set Result [:deserialize from=json value=($Result->"data")];
+:if (($Result->"success") = true) do={
     :log info ("[ddns-updater] Successfully updated \"$DomainName\" DNS record.");
 } else={
     :log error ("[ddns-updater] Failed to update \"$DomainName\" DNS record.");
