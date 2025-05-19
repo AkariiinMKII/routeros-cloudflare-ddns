@@ -51,7 +51,7 @@
 :if ($ResolvedIP != $WanIP6) do={
     :log info ("[ddns-checker] Get WAN IPv6 GUA: $WanIP6");
     :log info ("[ddns-checker] Get \"$DomainName\" DNS record: $ResolvedIP");
-    :log info ("[ddns-checker] Detected IP change, updating DNS record ...");
+    :log info ("[ddns-checker] Detected IP change, start updating DNS record ...");
 
     # Update DNS record
     :local UpdateDnsRecord [:parse [/system script get "ddns-update-dns-record" source]];
