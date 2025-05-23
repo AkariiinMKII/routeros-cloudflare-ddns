@@ -36,13 +36,14 @@
 :local Wan6Interface "_INTERFACE_";
 
 # Auto update IPv6 GUA prefix
-:global WanIP6Prefix;
-
 :if ([/ipv6 dhcp-client get [find interface=$Wan6Interface] status] = "bound") do={
     :local NewWanIP6Prefix [/ipv6 dhcp-client get [find interface=$Wan6Interface status=bound] prefix];
     :set NewWanIP6Prefix [:pick $NewWanIP6Prefix 0 [:find $NewWanIP6Prefix "::"]];
-    :if (($NewWanIP6Prefix != $WanIP6Prefix)&&([:len $NewWanIP6Prefix] > 0)) do={
+    :global WanIP6Prefix;
+    :global DdnsLastRunFailed;
+    :if ((($NewWanIP6Prefix != $WanIP6Prefix)||($DdnsLastRunFailed = true))&&([:len $NewWanIP6Prefix] > 0)) do={
         :log info ("[ddns-initializer] Detected new IPv6 GUA prefix: $NewWanIP6Prefix");
+        :set DdnsLastRunFailed false;
         :set WanIP6Prefix $NewWanIP6Prefix;
         /system script run "ddns-check-profile1";
         # /system script run "ddns-check-profile2";

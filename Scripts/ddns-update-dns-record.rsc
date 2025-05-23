@@ -42,5 +42,7 @@
 :if (($Result->"success") = true) do={
     :log info ("[ddns-updater] Successfully updated \"$DomainName\" DNS record.");
 } else={
-    :log error ("[ddns-updater] Failed to update \"$DomainName\" DNS record.");
+    :global DdnsLastRunFailed;
+    :set DdnsLastRunFailed true;
+    :error ("[ddns-updater] Failed to update \"$DomainName\" DNS record. Retry in 60 seconds.");
 }

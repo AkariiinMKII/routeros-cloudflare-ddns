@@ -16,13 +16,16 @@
 :local CurrentProfile $DdnsProfile1;
 :local DomainName ($CurrentProfile->"DomainName");
 
+:global DdnsLastRunFailed;
+
 # Checkup Domain ID
 :if ([:len ($CurrentProfile->"DomainId")] = 0) do={
     :local FetchDomainId [:parse [/system script get "ddns-fetch-domain-id" source]];
     :local DomainId [$FetchDomainId Profile=$CurrentProfile];
     :if ([:len $DomainId] = 0) do={
+        :set DdnsLastRunFailed true;
         :error ("[ddns-checker] Failed to get \"$DomainName\" domain ID.");
-    } else {
+    } else={
         :log info ("[ddns-checker] Get \"$DomainName\" domain ID: $DomainId");
         :set ($CurrentProfile->"DomainId") $DomainId;
         :set DdnsProfile1 $CurrentProfile;
@@ -35,6 +38,7 @@
 :global WanIP6Prefix;
 
 :if ([:len $WanIP6Prefix] = 0) do={
+    :set DdnsLastRunFailed true;
     :error ("[ddns-checker] Invalid IPv6 GUA prefix.");
 }
 
@@ -45,6 +49,7 @@
 :local FetchDnsRecord [:parse [/system script get "ddns-fetch-dns-record" source]];
 :local ResolvedIP [$FetchDnsRecord Profile=$CurrentProfile];
 :if ([:len $ResolvedIP] = 0) do={
+    :set DdnsLastRunFailed true;
     :error ("[ddns-checker] Failed to get \"$DomainName\" DNS record.");
 }
 
