@@ -41,7 +41,7 @@
     :set NewWanIP6Prefix [:pick $NewWanIP6Prefix 0 [:find $NewWanIP6Prefix "::"]];
     :global WanIP6Prefix;
     :global DdnsLastRunFailed;
-    :if ((($NewWanIP6Prefix != $WanIP6Prefix)||($DdnsLastRunFailed = true))&&([:len $NewWanIP6Prefix] > 0)) do={
+    :if ((($NewWanIP6Prefix != $WanIP6Prefix)||($DdnsLastRunFailed != false))&&([:len $NewWanIP6Prefix] > 0)) do={
         :log info ("[ddns-initializer] Detected new IPv6 GUA prefix: $NewWanIP6Prefix");
         :set DdnsLastRunFailed false;
         :set WanIP6Prefix $NewWanIP6Prefix;
