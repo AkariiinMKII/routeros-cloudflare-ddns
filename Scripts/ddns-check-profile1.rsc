@@ -44,6 +44,12 @@
 
 # Generate WAN IPv6 GUA
 :local WanIP6 ($WanIP6Prefix . ($CurrentProfile->"WanIP6Tail"));
+:if ([:len [:toip6 $WanIP6]] = 0) do={
+    :set WanIP6 (($WanIP6Prefix . ":") . ($CurrentProfile->"WanIP6Tail"));
+    :if ([:len [:toip6 $WanIP6]] = 0) do={
+        :set WanIP6 (($WanIP6Prefix . "::") . ($CurrentProfile->"WanIP6Tail"));
+    }
+}
 
 #Checkup DNS record
 :local FetchDnsRecord [:parse [/system script get "ddns-fetch-dns-record" source]];
@@ -53,7 +59,7 @@
     :error ("[ddns-checker] Failed to get \"$DomainName\" DNS record.");
 }
 
-:if ($ResolvedIP != $WanIP6) do={
+:if ([:toip6 $ResolvedIP] != [:toip6 $WanIP6]) do={
     :log info ("[ddns-checker] Get WAN IPv6 GUA: $WanIP6");
     :log info ("[ddns-checker] Get \"$DomainName\" DNS record: $ResolvedIP");
     :log info ("[ddns-checker] Detected IP change, start updating DNS record ...");
