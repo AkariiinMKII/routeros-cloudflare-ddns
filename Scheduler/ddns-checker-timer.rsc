@@ -2,7 +2,7 @@
 
 # Requires policy to be set to "read, write, policy, test" for the script to work.
 
-# It is recommended to set the script to run every 5 minutes, but you can adjust the interval as needed.
+# It is recommended to set the script to run every 10 minutes, but you can adjust the interval as needed.
 
 # Tested on RouterOS 7.18.2
 ######################################################################################
