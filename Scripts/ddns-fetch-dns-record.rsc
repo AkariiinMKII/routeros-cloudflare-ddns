@@ -6,7 +6,7 @@
 
 # Supports IPv6 only in current version.
 
-# Tested on RouterOS 7.18.2
+# Tested on RouterOS 7.20.8 (long-term)
 ######################################################################################
 
 # Import global variables

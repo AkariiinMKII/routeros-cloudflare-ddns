@@ -4,7 +4,7 @@
 
 # It is recommended to set the script to run every minute, but you can adjust the interval as needed.
 
-# Tested on RouterOS 7.18.2
+# Tested on RouterOS 7.20.8 (long-term)
 ######################################################################################
 
 /system script run "ddns-initialize-variables"
