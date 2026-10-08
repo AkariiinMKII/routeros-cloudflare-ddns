@@ -4,7 +4,7 @@
 
 # It is recommended to set the script to run every 10 minutes, but you can adjust the interval as needed.
 
-# Tested on RouterOS 7.20.8 (long-term)
+# Tested on RouterOS 7.23.7 (long-term)
 ######################################################################################
 
 /system script run "ddns-check-profile1"

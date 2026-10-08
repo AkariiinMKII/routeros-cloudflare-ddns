@@ -6,7 +6,7 @@
 
 # Supports IPv6 only in current version.
 
-# Tested on RouterOS 7.20.8 (long-term)
+# Tested on RouterOS 7.23.7 (long-term)
 ######################################################################################
 
 # Import DDNS profile
